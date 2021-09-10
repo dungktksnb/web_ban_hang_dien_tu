@@ -19,6 +19,13 @@ public class Controllers {
         return modelAndView;
     }
 
+    @GetMapping("/dung")
+    public ModelAndView show2(){
+        ModelAndView modelAndView=new ModelAndView("admin/index");
+//        modelAndView.addObject("listSanPham",iServiceSanPham.findAll());
+        return modelAndView;
+    }
+
 
 
 
