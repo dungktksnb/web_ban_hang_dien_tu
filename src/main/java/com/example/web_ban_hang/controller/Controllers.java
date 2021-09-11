@@ -18,6 +18,12 @@ public class Controllers {
         modelAndView.addObject("listSanPham",iServiceSanPham.findAll());
         return modelAndView;
     }
+    @GetMapping("dung")
+    public  ModelAndView  newss(){
+        ModelAndView modelAndView=new ModelAndView("cart");
+        return modelAndView;
+
+    }
 
 
 
