@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class Controllers {
     @Autowired
     IServiceSanPham iServiceSanPham;
-    @GetMapping("/show")
+    @GetMapping("/hh")
     public ModelAndView show(){
         ModelAndView modelAndView=new ModelAndView("home");
         modelAndView.addObject("listSanPham",iServiceSanPham.findAll());
