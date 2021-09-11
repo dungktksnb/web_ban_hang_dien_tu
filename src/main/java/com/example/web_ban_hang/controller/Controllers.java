@@ -35,9 +35,7 @@ public class Controllers {
     public  ModelAndView  newss(){
         ModelAndView modelAndView=new ModelAndView("cart");
         return modelAndView;
-
     }
-
     @GetMapping("/products")
     public ModelAndView showProduct() {
         ModelAndView modelAndView = new ModelAndView("products");
@@ -56,8 +54,7 @@ public class Controllers {
     }
     @GetMapping("/product")
     public ModelAndView showProducts(){
-        ModelAndView modelAndView=new ModelAndView("admin/homes");
+        ModelAndView modelAndView=new ModelAndView("admin/home");
         return modelAndView;
-
     }
 }
