@@ -19,7 +19,7 @@ public class SanPham {
     private ThuongHieu thuongHieu;
     @ManyToOne
     private HoaDonChiTiet hoaDonChiTiet;
-//    @JsonIgnoreProperties(value ="sanPham")
+    @JsonIgnoreProperties(value ="sanPham")
     @OneToMany(fetch = FetchType.EAGER)
     private List<Anh> anhs;
 

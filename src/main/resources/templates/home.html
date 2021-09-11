@@ -209,9 +209,9 @@
                     <div class="latest-product">
                         <h2 class="section-title">Latest Products</h2>
                         <div class="product-carousel">
-                            <div th:each="sp:${listSanPham}" class="single-product">
-                                <div class="product-f-image">
-                                    <img th:src="${sp.anhs.get(0).tenAnh}" alt="" width="200px" height="200px">
+                            <div th:each="sp:${listSanPham}" class="single-product"  >
+                                <div class="product-f-image" style="width: 200px;height: 300px">
+                                    <img th:src="${sp.anhs.get(0).tenAnh}" alt="" style="width: 200px;height: 300px" >
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> See details</a>
@@ -221,7 +221,7 @@
                                 <h2><a th:text ="${sp.tenSanPham}" href="single-product.html"></a></h2>
 
                                 <div class="product-carousel-price">
-                                    <ins>$700.00</ins> <del>$100.00</del>
+                                    <ins th:text="${sp.gia}"></ins> <del>$100.00</del>
                                 </div>
                             </div>
 
