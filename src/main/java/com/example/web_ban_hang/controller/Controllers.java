@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
+@RequestMapping("/home")
 public class Controllers {
     @Autowired
     IServiceThuongHieu iServiceThuongHieu;
@@ -23,17 +24,20 @@ public class Controllers {
     @Autowired
 
     IServiceSanPham iServiceSanPham;
+
     @GetMapping("/show")
     public ModelAndView show() {
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("listSanPham", iServiceSanPham.findAll());
         return modelAndView;
     }
-    @GetMapping("dung")
-    public  ModelAndView  newss(){
-        ModelAndView modelAndView=new ModelAndView("cart");
+
+    @GetMapping("/dung")
+    public ModelAndView newss() {
+        ModelAndView modelAndView = new ModelAndView("cart");
         return modelAndView;
     }
+
     @GetMapping("/products")
     public ModelAndView showProduct() {
         ModelAndView modelAndView = new ModelAndView("products");
@@ -41,24 +45,26 @@ public class Controllers {
         return modelAndView;
     }
 
-    @ModelAttribute("thuonghieu")
+    @ModelAttribute("/thuonghieu")
     public List<ThuongHieu> thuongHieuList() {
         return iServiceThuongHieu.findAll();
     }
 
-    @ModelAttribute("anh")
+    @ModelAttribute("/anh")
     public List<Anh> anhList() {
         return iServicesAnh.findAll();
     }
+
     @GetMapping("/product")
-    public ModelAndView showProducts(){
-        ModelAndView modelAndView=new ModelAndView("admin/index");
+    public ModelAndView showProducts() {
+        ModelAndView modelAndView = new ModelAndView("admin/index");
         return modelAndView;
     }
+
     @GetMapping("/sanpham")
-    public ModelAndView showSanPham(){
-        ModelAndView modelAndView=new ModelAndView("admin/simple-tables");
-        modelAndView.addObject("listSanPham",iServiceSanPham.findAll());
+    public ModelAndView showSanPham() {
+        ModelAndView modelAndView = new ModelAndView("admin/simple-tables");
+//        modelAndView.addObject("listSanPham", iServiceSanPham.findAll());
         return modelAndView;
     }
 
