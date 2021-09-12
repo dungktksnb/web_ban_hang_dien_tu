@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("/home")
 public class Controllers {
     @Autowired
     IServiceThuongHieu iServiceThuongHieu;
@@ -24,7 +23,6 @@ public class Controllers {
     @Autowired
 
     IServiceSanPham iServiceSanPham;
-
     @GetMapping("/show")
     public ModelAndView show() {
         ModelAndView modelAndView = new ModelAndView("home");
@@ -54,7 +52,15 @@ public class Controllers {
     }
     @GetMapping("/product")
     public ModelAndView showProducts(){
-        ModelAndView modelAndView=new ModelAndView("admin/home");
+        ModelAndView modelAndView=new ModelAndView("admin/index");
         return modelAndView;
     }
+    @GetMapping("/sanpham")
+    public ModelAndView showSanPham(){
+        ModelAndView modelAndView=new ModelAndView("admin/simple-tables");
+        modelAndView.addObject("listSanPham",iServiceSanPham.findAll());
+        return modelAndView;
+    }
+
+
 }

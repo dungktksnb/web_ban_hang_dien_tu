@@ -22,7 +22,6 @@ public class SanPham {
     @JsonIgnoreProperties(value ="sanPham")
     @OneToMany(fetch = FetchType.EAGER)
     private List<Anh> anhs;
-
     public SanPham() {
     }
 
