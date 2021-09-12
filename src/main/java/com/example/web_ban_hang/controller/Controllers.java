@@ -1,7 +1,9 @@
 package com.example.web_ban_hang.controller;
 
 import com.example.web_ban_hang.model.Anh;
+import com.example.web_ban_hang.model.NguoiDung;
 import com.example.web_ban_hang.model.ThuongHieu;
+import com.example.web_ban_hang.service.IServiceNguoiDung;
 import com.example.web_ban_hang.service.IServiceSanPham;
 import com.example.web_ban_hang.service.IServiceThuongHieu;
 import com.example.web_ban_hang.service.IServicesAnh;
@@ -24,18 +26,14 @@ public class Controllers {
     @Autowired
 
     IServiceSanPham iServiceSanPham;
-<<<<<<< HEAD
-    @GetMapping("/hh")
-    public ModelAndView show(){
-        ModelAndView modelAndView=new ModelAndView("home");
-        modelAndView.addObject("listSanPham",iServiceSanPham.findAll());
-=======
+    @Autowired
+    IServiceNguoiDung iServiceNguoiDung;
+
 
     @GetMapping("/show")
     public ModelAndView show() {
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("listSanPham", iServiceSanPham.findAll());
->>>>>>> 9927a68460e5be54ce40d3cd59a6d5aed29585a9
         return modelAndView;
     }
 
@@ -65,15 +63,17 @@ public class Controllers {
     @GetMapping("/product")
     public ModelAndView showProducts() {
         ModelAndView modelAndView = new ModelAndView("admin/index");
+modelAndView.addObject("nguoidung",iServiceNguoiDung.findAll());
         return modelAndView;
     }
 
     @GetMapping("/sanpham")
     public ModelAndView showSanPham() {
         ModelAndView modelAndView = new ModelAndView("admin/simple-tables");
-//        modelAndView.addObject("listSanPham", iServiceSanPham.findAll());
+        modelAndView.addObject("listSanPham", iServiceSanPham.findAll());
         return modelAndView;
     }
+
 
 
 }
