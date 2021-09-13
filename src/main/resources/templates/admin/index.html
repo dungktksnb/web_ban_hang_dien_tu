@@ -76,7 +76,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Tables</h6>
             <a class="collapse-item" href="/home/sanpham">Quản Lý Sản Phẩm</a>
-            <a class="collapse-item" href="/home/user">Quản Lý Người Dùng</a>
+            <a class="collapse-item" href="/admin/datatables.html">Quản Lý Người Dùng</a>
           </div>
         </div>
       </li>
@@ -295,10 +295,13 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                <form>
+
+                <a class="dropdown-item" href="/login" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
+                </form>
               </div>
             </li>
           </ul>
@@ -310,7 +313,7 @@
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="./">Home</a></li>
+              <li class="breadcrumb-item"><a href="/home/show">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
             </ol>
           </div>
