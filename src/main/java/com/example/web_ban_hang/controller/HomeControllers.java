@@ -1,9 +1,13 @@
 package com.example.web_ban_hang.controller;
 
+import com.example.web_ban_hang.model.NguoiDung;
+import com.example.web_ban_hang.model.Role;
 import com.example.web_ban_hang.model.SanPham;
 import com.example.web_ban_hang.model.ThuongHieu;
+import com.example.web_ban_hang.service.IServiceNguoiDung;
 import com.example.web_ban_hang.service.IServiceSanPham;
 import com.example.web_ban_hang.service.IServiceThuongHieu;
+import com.example.web_ban_hang.service.IServieRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,8 +29,12 @@ public class HomeControllers {
     @Autowired
     IServiceThuongHieu iServiceThuongHieu;
     @Autowired
-
+    IServiceNguoiDung iServiceNguoiDung;
+    @Autowired
+    IServieRole iServiceRole;
+    @Autowired
     IServiceSanPham iServiceSanPham;
+
     @GetMapping("/show")
     public ModelAndView show() {
         ModelAndView modelAndView = new ModelAndView("home");
@@ -98,6 +106,53 @@ public class HomeControllers {
         ModelAndView modelAndView=new ModelAndView("/admin/simple-tables");
         return modelAndView;
 
+    }
+    @GetMapping("/user")
+    public ModelAndView showUser() {
+        ModelAndView modelAndView = new ModelAndView("admin/datatables");
+        modelAndView.addObject("listUser", iServiceNguoiDung.findAll());
+        return modelAndView;
+    }
+    @GetMapping("/delete/{id}")
+    public ModelAndView showDelete(@PathVariable long id) {
+        ModelAndView modelAndView = new ModelAndView("createUser/delete");
+        modelAndView.addObject("user", iServiceNguoiDung.findById(id));
+        return modelAndView;
+    }
+    @ModelAttribute("/role")
+    public List<Role> roleList() {
+        return iServiceRole.findAll();
+    }
+
+    @GetMapping("/CreateUser")
+    public String createUserShow() {
+        return "createUser/index";
+    }
+
+    @GetMapping("/editUser/{id}")
+    public ModelAndView editUserShow(@PathVariable long id) {
+        ModelAndView modelAndView = new ModelAndView("createUser/editUser");
+        modelAndView.addObject("user", iServiceNguoiDung.findById(id));
+        return modelAndView;
+    }
+
+    @PostMapping("/CreateUser")
+    public ModelAndView createUser(@ModelAttribute NguoiDung nguoiDung) {
+        iServiceNguoiDung.save(nguoiDung);
+        ModelAndView modelAndView = new ModelAndView("redirect:/home/index");
+        return modelAndView;
+    }
+
+    @PostMapping("/editUser/{id}")
+    public ModelAndView editUser(@ModelAttribute NguoiDung nguoiDung) {
+        iServiceNguoiDung.save(nguoiDung);
+        ModelAndView modelAndView = new ModelAndView("redirect:/home/user");
+        return modelAndView;
+    }
+    @PostMapping("/delete/{id}")
+    public ModelAndView delete(@ModelAttribute NguoiDung nguoiDung,@PathVariable long id) {
+        iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
+        return new ModelAndView("redirect:/home/user");
     }
 
 
