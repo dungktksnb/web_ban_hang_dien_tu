@@ -4,7 +4,7 @@
 	Twitter: https://twitter.com/freshdesignweb
 	URL: https://www.freshdesignweb.com/ustora/
 -->
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -211,15 +211,13 @@
                         <div class="product-carousel">
                             <div th:each="sp:${listSanPham}" class="single-product"  >
                                 <div class="product-f-image" style="width: 200px;height: 300px">
-                                    <img th:src="${sp.anhs.get(0).tenAnh}" alt="" style="width: 200px;height: 300px" >
+                                    <img th:src="${sp.anhs}" alt="" style="width: 200px;height: 300px" >
                                     <div class="product-hover">
                                         <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                         <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                     </div>
                                 </div>
-
                                 <h2><a th:text ="${sp.tenSanPham}" href="single-product.html"></a></h2>
-
                                 <div class="product-carousel-price">
                                     <ins th:text="${sp.gia}"></ins> <del>$100.00</del>
                                 </div>

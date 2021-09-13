@@ -17,29 +17,18 @@ public class SanPham {
     private String moTaSanPham;
     @ManyToOne
     private ThuongHieu thuongHieu;
-    @ManyToOne
-    private HoaDonChiTiet hoaDonChiTiet;
-    @JsonIgnoreProperties(value ="sanPham")
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Anh> anhs;
+
+    private String anhs;
+
     public SanPham() {
     }
 
-    public SanPham(long id, String tenSanPham, double gia, String moTaSanPham, ThuongHieu thuongHieu, HoaDonChiTiet hoaDonChiTiet, List<Anh> anhs) {
+    public SanPham(long id, String tenSanPham, double gia, String moTaSanPham, ThuongHieu thuongHieu, String anhs) {
         this.id = id;
         this.tenSanPham = tenSanPham;
         this.gia = gia;
         this.moTaSanPham = moTaSanPham;
         this.thuongHieu = thuongHieu;
-        this.hoaDonChiTiet = hoaDonChiTiet;
-        this.anhs = anhs;
-    }
-
-    public List<Anh> getAnhs() {
-        return anhs;
-    }
-
-    public void setAnhs(List<Anh> anhs) {
         this.anhs = anhs;
     }
 
@@ -83,11 +72,11 @@ public class SanPham {
         this.thuongHieu = thuongHieu;
     }
 
-    public HoaDonChiTiet getHoaDonChiTiet() {
-        return hoaDonChiTiet;
+    public String getAnhs() {
+        return anhs;
     }
 
-    public void setHoaDonChiTiet(HoaDonChiTiet hoaDonChiTiet) {
-        this.hoaDonChiTiet = hoaDonChiTiet;
+    public void setAnhs(String anhs) {
+        this.anhs = anhs;
     }
 }
