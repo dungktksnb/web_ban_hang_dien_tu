@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -307,7 +306,7 @@
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Simple Tables</h1>
+            <h1 class="h3 mb-0 text-gray-800">Quản Lý Sản Phẩm</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
               <li class="breadcrumb-item">Tables</li>
@@ -320,7 +319,7 @@
               <!-- Simple Tables -->
               <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Simple Tables</h6>
+                  <td><a href="/home/createProduct" type="button" class="btn btn-sm btn-primary">Tạo mới sản phẩm</a></td>
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
@@ -330,19 +329,22 @@
                         <th>Tên Sản Phẩm</th>
                         <th>Giá</th>
                         <th>Mô Tả Sản Phẩm</th>
-                        <th>Thương Hiệu</th>
                         <th>Ảnh</th>
+                        <th>Thương Hiệu</th>
                         <th>Sửa</th>
-                        <th>Xóa</th>
+                        <th>xóa</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:each="sp:"listSanPham">
-                        <td><a href="#">RA0449</a></td>
-                        <td>Udin Wayang</td>
-                        <td>Nasi Padang</td>
-                        <td><span class="badge badge-success">Delivered</span></td>
-                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                      <tr th:each="sp: ${listSanPham}" >
+                        <td th:text="${sp.id}"></td>
+                        <td th:text="${sp.tenSanPham}"></td>
+                        <td th:text="${sp.gia}"></td>
+                        <td th:text="${sp.thuongHieu.getTenThuongHieu()}"></td>
+                        <td><img th:src="@{${sp.anhs}}" width="150px" height="80px"></td>
+                        <td th:text="${sp.thuongHieu.getTenThuongHieu()}"></td>
+                        <td><a th:href="@{/home/edit/{id}(id=${sp.id})}" type="button"  class="badge badge-success">Sửa</a></td>
+                        <td><a th:href="@{/home/delete/{id}(id=${sp.id})}" type="button" class="badge badge-danger">Xóa</a></td>
                       </tr>
 
                     </tbody>

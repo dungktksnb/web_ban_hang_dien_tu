@@ -30,6 +30,5 @@ public class ServiceSanPham implements IServiceSanPham{
     @Override
     public void remove(SanPham sanPham) {
         iRepoSanPham.delete(sanPham);
-
     }
 }
