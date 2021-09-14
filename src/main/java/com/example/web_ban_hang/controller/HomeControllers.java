@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/home")
 public class HomeControllers {
+    List<SanPham>listGioHang=new ArrayList<>();
     @Value("${uploadPart}")
     String uploadPart;
     @Autowired
@@ -34,7 +37,8 @@ public class HomeControllers {
     IServieRole iServiceRole;
     @Autowired
     IServiceSanPham iServiceSanPham;
-
+    @Autowired
+    HttpSession httpSession;
     @GetMapping("/show")
     public ModelAndView show() {
         ModelAndView modelAndView = new ModelAndView("home");
@@ -154,7 +158,27 @@ public class HomeControllers {
         iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
         return new ModelAndView("redirect:/home/user");
     }
+    @GetMapping("/addToCart/{id}")
+    public ModelAndView showCart(@PathVariable long id, HttpServletRequest req){
+        ModelAndView modelAndView=new ModelAndView("redirect:/home/show");
+        SanPham sanPham=iServiceSanPham.findById(id);
+        listGioHang.add(sanPham);
+        return modelAndView;
+    }
+    @GetMapping("/cart")
+    public ModelAndView showCart(HttpServletRequest req){
+        ModelAndView modelAndView=new ModelAndView("cart");
+        modelAndView.addObject("danhsachsanpham",listGioHang);
+        return modelAndView;
+    }
 
+
+
+//@GetMapping("/login")
+//    public ModelAndView login(){
+//        ModelAndView modelAndView=new ModelAndView("admin/login");
+//        return modelAndView;
+//}
 
 
 }

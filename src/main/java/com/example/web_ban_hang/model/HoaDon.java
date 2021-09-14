@@ -8,23 +8,20 @@ public class HoaDon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String tenSanPham;
-    private double gia;
-    private int soLuong;
-    private double thanhTien;
+    @OneToOne
+    private NguoiDung nguoiDung;
     @ManyToOne
     private HoaDonChiTiet hoaDonChiTiet;
+    private int status;
 
     public HoaDon() {
     }
 
-    public HoaDon(long id, String tenSanPham, double gia, int soLuong, double thanhTien, HoaDonChiTiet hoaDonChiTiet) {
+    public HoaDon(long id, NguoiDung nguoiDung, HoaDonChiTiet hoaDonChiTiet, int status) {
         this.id = id;
-        this.tenSanPham = tenSanPham;
-        this.gia = gia;
-        this.soLuong = soLuong;
-        this.thanhTien = thanhTien;
+        this.nguoiDung = nguoiDung;
         this.hoaDonChiTiet = hoaDonChiTiet;
+        this.status = status;
     }
 
     public long getId() {
@@ -35,36 +32,12 @@ public class HoaDon {
         this.id = id;
     }
 
-    public String getTenSanPham() {
-        return tenSanPham;
+    public NguoiDung getNguoiDung() {
+        return nguoiDung;
     }
 
-    public void setTenSanPham(String tenSanPham) {
-        this.tenSanPham = tenSanPham;
-    }
-
-    public double getGia() {
-        return gia;
-    }
-
-    public void setGia(double gia) {
-        this.gia = gia;
-    }
-
-    public int getSoLuong() {
-        return soLuong;
-    }
-
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
-    }
-
-    public double getThanhTien() {
-        return thanhTien;
-    }
-
-    public void setThanhTien(double thanhTien) {
-        this.thanhTien = thanhTien;
+    public void setNguoiDung(NguoiDung nguoiDung) {
+        this.nguoiDung = nguoiDung;
     }
 
     public HoaDonChiTiet getHoaDonChiTiet() {
@@ -73,5 +46,13 @@ public class HoaDon {
 
     public void setHoaDonChiTiet(HoaDonChiTiet hoaDonChiTiet) {
         this.hoaDonChiTiet = hoaDonChiTiet;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
