@@ -17,7 +17,7 @@
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home/product">
         <div class="sidebar-brand-icon">
           <img src="admin/img/logo/logo2.png">
         </div>
@@ -60,8 +60,8 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Forms</h6>
-            <a class="collapse-item" href="form_basics.html">Form Basics</a>
-            <a class="collapse-item" href="form_advanceds.html">Form Advanceds</a>
+            <a class="collapse-item" href="/admin/form_basics.html">Form Basics</a>
+            <a class="collapse-item" href="/admin/form_advanceds.html">Form Advanceds</a>
           </div>
         </div>
       </li>
@@ -74,8 +74,8 @@
         <div id="collapseTable" class="collapse show" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Tables</h6>
-            <a class="collapse-item active" href="/admin/simple-tables.html">Simple Tables</a>
-            <a class="collapse-item" href="datatables.html">DataTables</a>
+            <a class="collapse-item active" href="/home/sanpham">Quản lý sản phẩm</a>
+            <a class="collapse-item" href="/home/user">Quản lý người dùng</a>
           </div>
         </div>
       </li>
@@ -319,34 +319,34 @@
               <!-- Simple Tables -->
               <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <td><a href="/home/createProduct" type="button" class="btn btn-sm btn-primary">Tạo mới sản phẩm</a></td>
+                  <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phầm</h6>
+                  <a class="m-0 float-right btn btn-success btn-sm" href="/home/createProduct">Tạo<i
+                          class="fas fa-chevron-right"></i></a>
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr>
-                        <th>#</th>
+                        <th>STT</th>
                         <th>Tên Sản Phẩm</th>
                         <th>Giá</th>
-                        <th>Mô Tả Sản Phẩm</th>
                         <th>Ảnh</th>
+                        <th>Mô Tả Sản Phẩm</th>
                         <th>Thương Hiệu</th>
-                        <th>Sửa</th>
-                        <th>xóa</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:each="sp: ${listSanPham}" >
-                        <td th:text="${sp.id}"></td>
+                      <tr th:each="sp, loop: ${listSanPham}" >
+                        <td th:text="${loop.index +1}"></td>
                         <td th:text="${sp.tenSanPham}"></td>
                         <td th:text="${sp.gia}"></td>
+                        <td><img th:src="@{${sp.anhs}}" width="150px" height="100px"></td>
+<!--                        <td th:text="${sp.anhs}"></td>-->
+                        <td th:text="${sp.moTaSanPham}"></td>
                         <td th:text="${sp.thuongHieu.getTenThuongHieu()}"></td>
-                        <td><img th:src="@{${sp.anhs}}" width="150px" height="80px"></td>
-                        <td th:text="${sp.thuongHieu.getTenThuongHieu()}"></td>
-                        <td><a th:href="@{/home/edit/{id}(id=${sp.id})}" type="button"  class="badge badge-success">Sửa</a></td>
-                        <td><a th:href="@{/home/delete/{id}(id=${sp.id})}" type="button" class="badge badge-danger">Xóa</a></td>
+                        <td><a th:href="@{/home/editProduct/{id}(id=${sp.id})}" class="btn btn-warning btn-primary">Sửa</a></td>
+                        <td><a th:href="@{/home/deleteProduct/{id}(id=${sp.id})}" class="btn btn-danger btn-primary">Xóa</a></td>
                       </tr>
-
                     </tbody>
                   </table>
                 </div>

@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,19 +24,18 @@ import java.util.List;
 @Controller
 @RequestMapping("/home")
 public class HomeControllers {
-    List<SanPham>listGioHang=new ArrayList<>();
     @Value("${uploadPart}")
     String uploadPart;
     @Autowired
     IServiceThuongHieu iServiceThuongHieu;
-    @Autowired
-    IServiceNguoiDung iServiceNguoiDung;
-    @Autowired
-    IServieRole iServiceRole;
+
     @Autowired
     IServiceSanPham iServiceSanPham;
+  @Autowired IServiceNguoiDung iServiceNguoiDung;
     @Autowired
-    HttpSession httpSession;
+    IServieRole iServieRole;
+
+
     @GetMapping("/show")
     public ModelAndView show() {
         ModelAndView modelAndView = new ModelAndView("home");
@@ -58,20 +55,14 @@ public class HomeControllers {
     }
 
     @GetMapping("/product")
-    public ModelAndView showProducts(){
-        ModelAndView modelAndView=new ModelAndView("admin/index");
+    public ModelAndView showProducts() {
+        ModelAndView modelAndView = new ModelAndView("admin/index");
         return modelAndView;
     }
     @GetMapping("/sanpham")
-    public ModelAndView showSanPham(){
-        ModelAndView modelAndView=new ModelAndView("admin/simple-tables");
-        modelAndView.addObject("listSanPham",iServiceSanPham.findAll());
-        return modelAndView;
-    }
-    @GetMapping("createProduct")
-    public  ModelAndView createProduct(){
-        ModelAndView modelAndView=new ModelAndView("admin/createProduct");
-        modelAndView.addObject("sanpham",new SanPham());
+    public ModelAndView showSanPham() {
+        ModelAndView modelAndView = new ModelAndView("admin/simple-tables");
+        modelAndView.addObject("listSanPham", iServiceSanPham.findAll());
         return modelAndView;
     }
 
@@ -86,46 +77,83 @@ public class HomeControllers {
         return (ArrayList<ThuongHieu>) iServiceThuongHieu.findAll();
     }
 
-
-    @PostMapping("/upload")
-    public ModelAndView upload(@RequestParam MultipartFile file) throws IOException {
-
-        String name = file.getOriginalFilename();
-        FileCopyUtils.copy(file.getBytes(), new File(uploadPart + name));
-
-        ModelAndView modelAndView = new ModelAndView("admin/editProduct");
-        modelAndView.addObject("anhs", name);
-
+    @GetMapping("/createProduct")
+    public ModelAndView createProductShow() {
+        ModelAndView modelAndView=new ModelAndView("product/createProduct");
+        modelAndView.addObject("product",new SanPham());
+        modelAndView.addObject("listthuonghieu",iServiceThuongHieu.findAll());
         return modelAndView;
     }
-    @PostMapping()
-    public ModelAndView createProduct( @RequestParam MultipartFile file,@ModelAttribute SanPham sanpham){
-        String name = file.getOriginalFilename();
+
+    @GetMapping("/editProduct/{id}")
+    public ModelAndView editProductShow(@PathVariable long id) {
+        ModelAndView modelAndView = new ModelAndView("product/editproduct");
+        modelAndView.addObject("sanpham", iServiceSanPham.findById(id));
+//        modelAndView.addObject("listtThuongHieu", iServiceThuongHieu.findAll());
+        return modelAndView;
+    }
+
+    @GetMapping("/deleteProduct/{id}")
+    public ModelAndView DeleteProduct(@PathVariable long id) {
+        iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
+//        ModelAndView modelAndView = new ModelAndView("createUser/delete");
+//        modelAndView.addObject("product", iServiceSanPham.findById(id));
+        return new ModelAndView("redirect:/home/sanpham");
+    }
+//    @PostMapping("/upload")
+//    public ModelAndView upload(@RequestParam MultipartFile file) throws IOException {
+//        String name = file.getOriginalFilename();
+//        FileCopyUtils.copy(file.getBytes(), new File(uploadPart + name));
+//
+//        ModelAndView modelAndView = new ModelAndView("admin/editProduct");
+//        modelAndView.addObject("anhs", name);
+//        return modelAndView;
+//    }
+
+    @PostMapping("/createProduct")
+    public ModelAndView createProduct(@RequestParam MultipartFile anhs, @ModelAttribute SanPham sanPham) {
+        String nameFile = anhs.getOriginalFilename();
         try {
-            FileCopyUtils.copy(file.getBytes(), new File(uploadPart + name));
+            FileCopyUtils.copy(anhs.getBytes(), new File(uploadPart + nameFile));
+            sanPham.setAnhs("/img/" + nameFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        iServiceSanPham.save(sanpham);
-        ModelAndView modelAndView=new ModelAndView("/admin/simple-tables");
+        iServiceSanPham.save(sanPham);
+        ModelAndView modelAndView = new ModelAndView("/home/sanpham");
         return modelAndView;
-
     }
+
+    @PostMapping("/editProduct/{id}")
+    public ModelAndView editProduct(@RequestParam MultipartFile uppImg, @ModelAttribute SanPham sanPham) {
+        String nameFile = uppImg.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(uppImg.getBytes(), new File(uploadPart + nameFile));
+            sanPham.setAnhs("/img/" + nameFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        iServiceSanPham.save(sanPham);
+        ModelAndView modelAndView = new ModelAndView("redirect:/home/sanpham");
+        return modelAndView;
+    }
+
+//    @PostMapping("/deleteProduct/{id}")
+//    public ModelAndView deleteProduct(@ModelAttribute NguoiDung nguoiDung, @PathVariable long id) {
+//        iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
+//        return new ModelAndView("redirect:/home/sanpham");
+//    }
+
     @GetMapping("/user")
     public ModelAndView showUser() {
         ModelAndView modelAndView = new ModelAndView("admin/datatables");
         modelAndView.addObject("listUser", iServiceNguoiDung.findAll());
         return modelAndView;
     }
-    @GetMapping("/delete/{id}")
-    public ModelAndView showDelete(@PathVariable long id) {
-        ModelAndView modelAndView = new ModelAndView("createUser/delete");
-        modelAndView.addObject("user", iServiceNguoiDung.findById(id));
-        return modelAndView;
-    }
+
     @ModelAttribute("/role")
     public List<Role> roleList() {
-        return iServiceRole.findAll();
+        return iServieRole.findAll();
     }
 
     @GetMapping("/CreateUser")
@@ -140,45 +168,31 @@ public class HomeControllers {
         return modelAndView;
     }
 
+    @GetMapping("/delete/{id}")
+    public ModelAndView showDelete(@PathVariable long id) {
+        ModelAndView modelAndView = new ModelAndView("createUser/delete");
+        modelAndView.addObject("user", iServiceNguoiDung.findById(id));
+        return modelAndView;
+    }
+
     @PostMapping("/CreateUser")
     public ModelAndView createUser(@ModelAttribute NguoiDung nguoiDung) {
         iServiceNguoiDung.save(nguoiDung);
-        ModelAndView modelAndView = new ModelAndView("redirect:/home/index");
+        ModelAndView modelAndView = new ModelAndView("redirect:/home/user");
         return modelAndView;
+
     }
 
     @PostMapping("/editUser/{id}")
     public ModelAndView editUser(@ModelAttribute NguoiDung nguoiDung) {
         iServiceNguoiDung.save(nguoiDung);
-        ModelAndView modelAndView = new ModelAndView("redirect:/home/user");
+        ModelAndView modelAndView = new ModelAndView("redirect:home/user");
         return modelAndView;
     }
+
     @PostMapping("/delete/{id}")
-    public ModelAndView delete(@ModelAttribute NguoiDung nguoiDung,@PathVariable long id) {
+    public ModelAndView delete(@ModelAttribute NguoiDung nguoiDung, @PathVariable long id) {
         iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
-        return new ModelAndView("redirect:/home/user");
+        return new ModelAndView("redirect:home/user");
     }
-    @GetMapping("/addToCart/{id}")
-    public ModelAndView showCart(@PathVariable long id, HttpServletRequest req){
-        ModelAndView modelAndView=new ModelAndView("redirect:/home/show");
-        SanPham sanPham=iServiceSanPham.findById(id);
-        listGioHang.add(sanPham);
-        return modelAndView;
-    }
-    @GetMapping("/cart")
-    public ModelAndView showCart(HttpServletRequest req){
-        ModelAndView modelAndView=new ModelAndView("cart");
-        modelAndView.addObject("danhsachsanpham",listGioHang);
-        return modelAndView;
-    }
-
-
-
-//@GetMapping("/login")
-//    public ModelAndView login(){
-//        ModelAndView modelAndView=new ModelAndView("admin/login");
-//        return modelAndView;
-//}
-
-
 }

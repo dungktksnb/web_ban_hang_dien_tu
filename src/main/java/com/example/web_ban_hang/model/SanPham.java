@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-
 public class SanPham {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +16,7 @@ public class SanPham {
     private String moTaSanPham;
     @ManyToOne
     private ThuongHieu thuongHieu;
-
     private String anhs;
-
     public SanPham() {
     }
 

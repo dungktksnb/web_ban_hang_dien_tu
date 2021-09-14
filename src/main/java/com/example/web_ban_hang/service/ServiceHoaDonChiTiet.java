@@ -2,8 +2,6 @@ package com.example.web_ban_hang.service;
 
 import com.example.web_ban_hang.model.HoaDonChiTiet;
 import com.example.web_ban_hang.repository.IRepoHoaDonChiTiet;
-import com.example.web_ban_hang.model.HoaDonChiTiet;
-import com.example.web_ban_hang.repository.IRepoHoaDonChiTiet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
