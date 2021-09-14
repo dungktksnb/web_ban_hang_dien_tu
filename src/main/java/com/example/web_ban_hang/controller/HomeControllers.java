@@ -49,7 +49,7 @@ public class HomeControllers {
         return modelAndView;
     }
 
-    @ModelAttribute("/thuonghieu")
+    @ModelAttribute("thuonghieu")
     public List<ThuongHieu> thuongHieuList() {
         return iServiceThuongHieu.findAll();
     }
@@ -73,10 +73,20 @@ public class HomeControllers {
     }
 
     @GetMapping("/createProduct")
-    public String createProductShow() {
-        return "product/createProduct";
+    public ModelAndView createProductShow() {
+        ModelAndView modelAndView= new ModelAndView("createProduct/index");
+        modelAndView.addObject("sanpham", new SanPham());
+//        modelAndView.addObject("thuongHieu", iServiceThuongHieu.findAll());
+        return modelAndView;
     }
 
+//    @GetMapping("/createProducttttt")
+//    public ModelAndView createProductShoww() {
+//        ModelAndView modelAndView= new ModelAndView("createProduct/index");
+////        modelAndView.addObject("sanpham", new SanPham());
+////        modelAndView.addObject("thuongHieu", iServiceThuongHieu.findAll());
+//        return modelAndView;
+//    }
     @GetMapping("/editProduct/{id}")
     public ModelAndView editProductShow(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("product/index");
@@ -103,21 +113,7 @@ public class HomeControllers {
 //    }
 
     @PostMapping("/createProduct")
-    public ModelAndView createProduct(@RequestParam MultipartFile anhs, @ModelAttribute SanPham sanPham) {
-        String nameFile = anhs.getOriginalFilename();
-        try {
-            FileCopyUtils.copy(anhs.getBytes(), new File(uploadPart + nameFile));
-            sanPham.setAnhs("/img/" + nameFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        iServiceSanPham.save(sanPham);
-        ModelAndView modelAndView = new ModelAndView("redirect:/home/sanpham");
-        return modelAndView;
-    }
-
-    @PostMapping("/editProduct/{id}")
-    public ModelAndView editProduct(@RequestParam MultipartFile uppImg, @ModelAttribute SanPham sanPham) {
+    public ModelAndView createProduct(@RequestParam MultipartFile uppImg, @ModelAttribute SanPham sanPham) {
         String nameFile = uppImg.getOriginalFilename();
         try {
             FileCopyUtils.copy(uppImg.getBytes(), new File(uploadPart + nameFile));
@@ -130,11 +126,25 @@ public class HomeControllers {
         return modelAndView;
     }
 
-//    @PostMapping("/deleteProduct/{id}")
-//    public ModelAndView deleteProduct(@ModelAttribute NguoiDung nguoiDung, @PathVariable long id) {
-//        iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
-//        return new ModelAndView("redirect:/home/sanpham");
-//    }
+    @PostMapping("/editProduct/{id}")
+    public ModelAndView editProduct(@RequestParam MultipartFile anhs, @ModelAttribute SanPham sanPham) {
+        String nameFile = anhs.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(anhs.getBytes(), new File(uploadPart + nameFile));
+            sanPham.setAnhs("/img/" + nameFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        iServiceSanPham.save(sanPham);
+        ModelAndView modelAndView = new ModelAndView("redirect:/home/sanpham");
+        return modelAndView;
+    }
+
+    @PostMapping("/deleteProduct/{id}")
+    public ModelAndView deleteProduct(@ModelAttribute NguoiDung nguoiDung, @PathVariable long id) {
+        iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
+        return new ModelAndView("redirect:/home/sanpham");
+    }
 
     @GetMapping("/user")
     public ModelAndView showUser() {

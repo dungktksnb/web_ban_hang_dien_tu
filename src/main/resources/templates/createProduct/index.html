@@ -17,39 +17,41 @@
 <div class="main">
 
     <div class="container">
-        <form method="POST" class="appointment-form" id="appointment-form" enctype="multipart/form-data">
+        <form method="post" th:object="${sanpham}" class="appointment-form" id="appointment-form"
+              enctype="multipart/form-data" th:action="@{/home/createProduct}">
             <h2>Thêm sản phẩm mới</h2>
-            <div class="form-group-1" th:object="${sanpham}">
+            <div class="form-group-1">
                 <input type="text" th:field="*{tenSanPham}" placeholder="Tên sản phấm" required/>
                 <input type="text" th:field="*{gia}" placeholder="Giá" required/>
                 <img th:src="${sanpham.anhs}" width="100" height="50">
-                <input type="file" name="uppImg" placeholder="Thêm ảnh" required/>
+                <input type="file" th:field="*{anhs}" hidden>
+                <!--                <input type="file" name="anhs" placeholder="Thêm ảnh" required/>-->
                 <input type="text" th:field="*{moTaSanPham}" placeholder="Mô tả sản phẩm" required/>
                 <!--                <input type="text" th:field="*{thuongHieu}" placeholder="Thương hiệu" required/>-->
                 <div class="select-list">
-                    <select th:value="*{thuongHieu.id}" name="thuongHieu">
+                    <select th:field="*{thuongHieu}">
                         <!--                        <option slected value="">Thương hiệu</option>-->
-                        <option th:each="thuonghieu:${thuongHieu}"
-                                th:value="${thuonghieu.id}"
-                                th:text="${thuonghieu.tenThuongHieu}"></option>
+                        <option th:each="th:${thuonghieu}"
+                                th:value="${th.id}"
+                                th:text="${th.tenThuongHieu}"></option>
                     </select>
                 </div>
             </div>
-<!--            <div class="form-group-1">-->
-<!--                <input type="text" name="tenSanPham" id="title" placeholder="Tên sản phẩm" required/>-->
-<!--                <input type="text" name="gia" id="password" placeholder="Giá" required/>-->
-<!--                <input type="file" name="anhs" id="address" placeholder="Thêm ảnh" required/>-->
-<!--                <input type="text" name="moTaSanPham" id="dateOfBirth" placeholder="Mô Tả Sản Phẩm" required/>-->
-<!--                &lt;!&ndash;                <input type="text" name="thuongHieu" id="email" placeholder="Thương Hiệu" required/>&ndash;&gt;-->
-<!--                <div class="select-list">-->
-<!--                    <select name="thuongHieu" id="thuongHieu">-->
-<!--                        <option slected value="0">Thương Hiệu</option>-->
-<!--                        <option value="1">SamSung</option>-->
-<!--                        <option value="2">Iphone</option>-->
-<!--                        <option value="3">Xiaomi</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div class="form-group-1">-->
+            <!--                <input type="text" name="taiKhoan" id="title" placeholder="Tên tài khoản" required/>-->
+            <!--                <input type="text" name="matKhau" id="password" placeholder="Mật khẩu" required/>-->
+            <!--                <input type="text" name="diaChi" id="address" placeholder="Địa chỉ" required/>-->
+            <!--                <input type="date" name="ngaySinh" id="dateOfBirth" placeholder="Ngày sinh" required/>-->
+            <!--                <input type="email" name="email" id="email" placeholder="Email" required/>-->
+            <!--                <input type="number" name="soDienThoai" id="phone_number" placeholder="Số điện thoại" required/>-->
+            <!--                &lt;!&ndash;                    <div class="select-list">&ndash;&gt;-->
+            <!--                &lt;!&ndash;                        <select name="course_type" id="course_type">&ndash;&gt;-->
+            <!--                &lt;!&ndash;                            <option slected value="">Course Type</option>&ndash;&gt;-->
+            <!--                &lt;!&ndash;                            <option value="society">Society</option>&ndash;&gt;-->
+            <!--                &lt;!&ndash;                            <option value="language">Language</option>&ndash;&gt;-->
+            <!--                &lt;!&ndash;                        </select>&ndash;&gt;-->
+            <!--                &lt;!&ndash;                    </div>&ndash;&gt;-->
+            <!--            </div>-->
             <!--                <div class="form-group-2">-->
             <!--                    <h3>How would you like to bo located ?</h3>-->
             <!--                    <div class="select-list">-->
@@ -72,9 +74,9 @@
                     and Conditions</a></label>
             </div>
             <div class="form-submit">
-                <a href="/home/sanpham" class="m-0 float-right btn btn-success btn-sm">Quay lại</a>
+                <a href="/home/user" class="m-0 float-right btn btn-success btn-sm">Quay lại</a>
                 </br>
-                <button type="submit">Đăng ký</button>
+                <button type="submit">Tạo mới</button>
             </div>
         </form>
     </div>
