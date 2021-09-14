@@ -95,7 +95,7 @@ public class HomeControllers {
 
     @GetMapping("/deleteProduct/{id}")
     public ModelAndView DeleteProduct(@PathVariable long id) {
-        iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
+        iServiceSanPham.remove(iServiceSanPham.findById(id));
 //        ModelAndView modelAndView = new ModelAndView("createUser/delete");
 //        modelAndView.addObject("product", iServiceSanPham.findById(id));
         return new ModelAndView("redirect:/home/sanpham");
@@ -193,6 +193,6 @@ public class HomeControllers {
     @PostMapping("/delete/{id}")
     public ModelAndView delete(@ModelAttribute NguoiDung nguoiDung, @PathVariable long id) {
         iServiceNguoiDung.remove(iServiceNguoiDung.findById(id));
-        return new ModelAndView("redirect:home/user");
+        return new ModelAndView("redirect:/home/user");
     }
 }

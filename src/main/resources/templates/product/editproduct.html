@@ -28,7 +28,7 @@
                 <input type="text" th:field="*{moTaSanPham}" placeholder="Mô tả sản phẩm" >
 <!--                <input type="text" th:field="*{thuongHieu}" placeholder="Thương hiệu" required/>-->
                 <div class="select-list">
-                    <select th:value="*{thuongHieu.id}" name="thuonghieu">
+                    <select th:value="*{thuongHieu.id}" name="thuongHieu">
 <!--                        <option slected value="">Thương hiệu</option>-->
                         <option th:each="thuonghieu:${thuonghieu}"
                                 th:value="${thuonghieu.id}"
